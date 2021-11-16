@@ -152,6 +152,7 @@ def import_packages(aem_jar_file_name, port, runmode, username='admin', password
     log("Author mode detected. Setting replication agent...")
     update_author_replication_agent(base_url)
     show_publisher_status(base_url, credentials)
+    set_externalizer_host_config()
 
   disable_asset_workflow(base_url, credentials)
 
@@ -346,3 +347,20 @@ def show_publisher_status(base_url, credentials):
   c.perform()
   c.close()
   log(publisher_status.getvalue())
+  
+def set_externalizer_host_config():
+  save_path = '/opt/aem/crx-quickstart/launchpad/config/com/day/cq/commons/impl'
+  file_name = "ExternalizerImpl.config"
+      
+  completeName = os.path.join(save_path, file_name)
+  file1 = open(completeName, "w")
+  file1.write("""
+              :org.apache.felix.configadmin.revision:=L"1"
+                  externalizer.domains=[ \
+                    "local\ http://localhost:4502", \
+                    "author\ http://localhost:4502", \
+                    "publish\ http://publisher:4503", \
+                    ]
+                  service.pid="com.day.cq.commons.impl.ExternalizerImpl"
+              """)
+  file1.close() 

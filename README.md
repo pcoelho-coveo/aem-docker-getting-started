@@ -26,8 +26,12 @@
  - Images need to be rebuild when changing packages in the `packages` directories.
  - Running `docker-compose down` will delete persisted data of the containers.
  - We can still install and uninstall the coveo connector from the maven task we have configured
-
-## Credits
+ - The document links on the platform are pointing to `http://publisher:4503` because it is using the externalizer configuration `http://publisher:4503`.The author 
+container is not able to make http requests using `http://localhost:4503` because it's running on a separate container. However, the `hostname` of the publisher container is not available
+on the host machine but we forward `4503:4503` port from the publisher container to the host port. So the document link can be accessed on `http://localhost:4503/my-document/etc/doc.html`.
+You can also edit the `C:\Windows\System32\drivers\etc\hosts` file by adding `127.0.0.1 publisher` so it will properly the urls (we may automate that step later). 
+   
+# Credits
 
 Inspiration and code examples are taken from the following projects:
 
