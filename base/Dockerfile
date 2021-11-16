@@ -1,5 +1,7 @@
 FROM centos:7
 
+ARG java_version
+
 # Install packages
 # ld-linux.so.2, glibc.i686 and libuuid.i686 are added to enable XMP extraction and write-back on 64-bit RedHat Linux
 # See https://helpx.adobe.com/experience-manager/kb/enable-xmp-write-back-64-bit-redhat.html.
@@ -8,7 +10,7 @@ RUN yum -y --enablerepo=centosplus update \
     && yum install -y \
       tar \
       wget \
-      java-1.8.0-openjdk \
+      $java_version \
       libselinux-devel \
       epel-release \
       ipython3 \
@@ -22,6 +24,9 @@ RUN yum -y --enablerepo=centosplus update \
     && rm -rf /var/cache/yum
 
 ENV TZ=America/Montreal
+
+# Download oak jar
+RUN wget https://repository.apache.org/service/local/repositories/releases/content/org/apache/jackrabbit/oak-run/1.8.9/oak-run-1.8.9.jar
 
 # Copy required build media
 COPY ./AEM_6.*_Quickstart.jar /opt/aem/AEM_6.x_Quickstart.jar
