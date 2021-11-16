@@ -10,7 +10,7 @@ services:
       - '4502:4502'
       - '30303:30303'
     volumes:
-      - ./logs/author:/opt/aem/crx-quickstart/logs
+      - ./aem-docker/logs/author:/opt/aem/crx-quickstart/logs
     depends_on:
       - 'publisher'
   publisher:
@@ -23,17 +23,17 @@ services:
       - '4503:4503'
       - '30304:30304'
     volumes:
-      - ./logs/publisher:/opt/aem/crx-quickstart/logs
+      - ./aem-docker/logs/publisher:/opt/aem/crx-quickstart/logs
   dispatcher:
     container_name: aem_dispatcher
     build:
       context: ./dispatcher
     hostname: 'dispatcher'
     ports:
-      - '80:80'
-      - '443:443'
+      - '8080:80'
+      - '8443:443'
     volumes:
-      - ./logs/dispatcher:/etc/httpd/logs
+      - ./aem-docker/logs/dispatcher:/etc/httpd/logs
     environment:
       - DOMAIN=aem.local
     depends_on:

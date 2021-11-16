@@ -8,6 +8,8 @@ RUN yum install -y --enablerepo=centosplus \
   httpd-2.4.6 \
   && yum clean all
 
+ENV TZ=America/Montreal
+
 # Download the dispatcher
 RUN wget https://download.macromedia.com/dispatcher/download/dispatcher-apache2.4-linux-x86_64-ssl1.0-4.3.3.tar.gz
 

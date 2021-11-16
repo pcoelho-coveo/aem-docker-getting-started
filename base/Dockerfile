@@ -21,6 +21,8 @@ RUN yum -y --enablerepo=centosplus update \
     && yum clean all \
     && rm -rf /var/cache/yum
 
+ENV TZ=America/Montreal
+
 # Copy required build media
 COPY ./AEM_6.*_Quickstart.jar /opt/aem/AEM_6.x_Quickstart.jar
 COPY ./license.properties /opt/aem/license.properties

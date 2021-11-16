@@ -4,3 +4,5 @@ logs/*
 *.zip
 .DS_Store
 .vscode
+.idea
+aem-docker/*
