@@ -13,6 +13,11 @@ services:
       - ./aem-docker/logs/author:/opt/aem/crx-quickstart/logs
     depends_on:
       - 'publisher'
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
   publisher:
     container_name: aem_publisher
     build:
@@ -24,6 +29,11 @@ services:
       - '30304:30304'
     volumes:
       - ./aem-docker/logs/publisher:/opt/aem/crx-quickstart/logs
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 3G
   dispatcher:
     container_name: aem_dispatcher
     build:
@@ -38,3 +48,8 @@ services:
       - DOMAIN=aem.local
     depends_on:
       - 'publisher'
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2G
