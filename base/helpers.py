@@ -171,6 +171,8 @@ def import_packages(aem_jar_file_name, port, runmode, username='admin', password
     wait_until_package_installed(base_url, credentials, package_reference)
 
     # Always restart AEM after every package install
+    log("Waiting 300 seconds before re starting the AEM server so updates can work properly")
+    sleep(300)
     server_process_id = restart_aem_server(server_process_id, aem_jar_file_name, port, runmode)
 
   log("Finished installing packages.")
