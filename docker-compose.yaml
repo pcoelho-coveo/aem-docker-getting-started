@@ -8,7 +8,7 @@ services:
     hostname: 'author'
     ports:
       - '4502:4502'
-      - '30303:30303'
+      - '5005:5005'
     volumes:
       - ./aem-docker/logs/author:/opt/aem/crx-quickstart/logs
     depends_on:
@@ -26,7 +26,7 @@ services:
     hostname: 'publisher'
     ports:
       - '4503:4503'
-      - '30304:30304'
+      - '5006:5006'
     volumes:
       - ./aem-docker/logs/publisher:/opt/aem/crx-quickstart/logs
     deploy:
