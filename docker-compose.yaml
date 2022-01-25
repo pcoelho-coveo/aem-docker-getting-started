@@ -10,7 +10,7 @@ services:
       - '4502:4502'
       - '5005:5005'
     volumes:
-      - ./aem-docker/logs/author:/opt/aem/crx-quickstart/logs
+      - ./logs/author:/opt/aem/crx-quickstart/logs
     depends_on:
       - 'publisher'
     deploy:
@@ -28,7 +28,7 @@ services:
       - '4503:4503'
       - '5006:5006'
     volumes:
-      - ./aem-docker/logs/publisher:/opt/aem/crx-quickstart/logs
+      - ./logs/publisher:/opt/aem/crx-quickstart/logs
     deploy:
       resources:
         limits:
@@ -43,7 +43,7 @@ services:
       - '8080:80'
       - '8443:443'
     volumes:
-      - ./aem-docker/logs/dispatcher:/etc/httpd/logs
+      - ./logs/dispatcher:/etc/httpd/logs
     environment:
       - DOMAIN=aem.local
     depends_on:
