@@ -43,3 +43,7 @@ Inspiration and code examples are taken from the following projects:
 # java versions
 - openjdk8
 - openjdk11 
+
+# Debian
+openjdk-8-jdk
+openjdk-11-jdk 

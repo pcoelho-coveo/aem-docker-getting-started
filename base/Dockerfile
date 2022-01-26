@@ -1,29 +1,27 @@
-FROM python:3.9.10-alpine3.15
+FROM python:3.9.10-slim-bullseye
 
 ARG java_version
 
-RUN apk update && apk upgrade
-RUN apk --no-cache add \
+RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    apt-add-repository 'deb http://security.debian.org/debian-security stretch/updates main'
+
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y  \
     $java_version \
-    tar \
     wget \
     gcc \
-    linux-headers \
-    musl-dev \
-    libcurl \
-    curl-dev \
-    libstdc++ \
-    openssl \
-    ipython \
-    --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community \
-    && \
-    rm -rf /var/cache/apk/*
- 
+    libcurl4-openssl-dev \
+    libssl-dev
+        
+RUN apt-get clean
+
 # Needed for the pycurl compilation
 ENV PYCURL_SSL_LIBRARY=openssl
 ENV PYTHONUNBUFFERED 1
 
-RUN python3 -m pip install --no-cache-dir --upgrade \
+RUN /usr/local/bin/python3 -m pip install --no-cache-dir --upgrade \
     pip \
     psutil \
     pycurl \
