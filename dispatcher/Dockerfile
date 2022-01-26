@@ -1,33 +1,33 @@
-FROM centos:7
+FROM httpd:alpine3.15
 
-# Install Apache
-RUN yum install -y --enablerepo=centosplus \
-  tar \
-  wget \
-  libselinux-devel \
-  httpd-2.4.6 \
-  && yum clean all
+RUN apk update && apk upgrade
+RUN apk --no-cache add \
+    tar \
+    wget \
+    --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community \
+    && \
+    rm -rf /var/cache/apk/*
 
 ENV TZ=America/Montreal
 
 # Download the dispatcher
 RUN wget https://download.macromedia.com/dispatcher/download/dispatcher-apache2.4-linux-x86_64-ssl1.0-4.3.3.tar.gz
-
-RUN mkdir -p dispatcher
-RUN tar -C dispatcher -zxvf dispatcher-apache2.*.tar.gz
+RUN tar -zxvf dispatcher-apache2.*.tar.gz
 
 # Copy the dispatcher
-RUN cp ./dispatcher/dispatcher-apache2.*.so /etc/httpd/modules/
-RUN ln -s /etc/httpd/modules/dispatcher-apache2.*.so /etc/httpd/modules/mod_dispatcher.so
+RUN cp ./dispatcher-apache2.*.so /usr/local/apache2/modules
+RUN ln -s /usr/local/apache2/modules/dispatcher-apache2.*.so /usr/local/apache2/modules/mod_dispatcher.so
 
 # Add config files
-ADD ./httpd.conf /etc/httpd/conf/httpd.conf
-ADD ./aem-disp2.conf /etc/httpd/conf.d/aem-disp2.conf
-ADD ./proxy.conf /etc/httpd/conf.d/zzz-proxy.conf
-ADD ./dispatcher.any /etc/httpd/conf/dispatcher.any
+ADD ./httpd.conf /usr/local/apache2/conf/httpd.conf
+ADD ./aem-disp2.conf /usr/local/apache2/conf.d/aem-disp2.conf
+ADD ./proxy.conf /usr/local/apache2/conf.d/zzz-proxy.conf
+ADD ./dispatcher.any /usr/local/apache2/conf/dispatcher.any
 
-# Set permissions
-RUN chown -R daemon:daemon /var/www/html
+RUN ls /usr/local/apache2/
 
-EXPOSE 80 443
-CMD /usr/sbin/httpd -D FOREGROUND
+## Set permissions
+#RUN chown -R daemon:daemon /var/www/html
+#
+#EXPOSE 80 443
+#CMD /usr/sbin/httpd -D FOREGROUND
