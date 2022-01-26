@@ -43,7 +43,7 @@ services:
       - '8080:80'
       - '8443:443'
     volumes:
-      - ./logs/dispatcher:/etc/httpd/logs
+      - ./logs/dispatcher:/usr/local/apache2/logs
     environment:
       - DOMAIN=aem.local
     depends_on:

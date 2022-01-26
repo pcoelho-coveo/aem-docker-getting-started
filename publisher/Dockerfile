@@ -4,7 +4,7 @@ WORKDIR /opt/aem
 
 COPY ./publisher/packages/* /opt/aem/packages/
 
-RUN python aem_installer.py -i AEM_6.x_Quickstart.jar -r publish,local -p 4503
+RUN python3 aem_installer.py -i AEM_6.x_Quickstart.jar -r publish,local -p 4503
 
 EXPOSE 4503
 CMD java -Xms4g -Xmx4g -Djava.awt.headless=true -Xdebug -Xnoagent -agentlib:jdwp=transport=dt_socket,address=5006,server=y,suspend=n -jar AEM_6.x_Quickstart.jar -p 4503 -r publish,local -v -nofork

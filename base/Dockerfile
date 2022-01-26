@@ -1,27 +1,33 @@
-FROM centos:7
+FROM python:3.9.10-alpine3.15
 
 ARG java_version
 
-# Install packages
-# ld-linux.so.2, glibc.i686 and libuuid.i686 are added to enable XMP extraction and write-back on 64-bit RedHat Linux
-# See https://helpx.adobe.com/experience-manager/kb/enable-xmp-write-back-64-bit-redhat.html.
-RUN yum -y install epel-release && yum clean all
-RUN yum -y --enablerepo=centosplus update \
-    && yum install -y \
-      tar \
-      wget \
-      $java_version \
-      libselinux-devel \
-      epel-release \
-      ipython3 \
-      python-pip \
-      python-psutil \
-      python-pycurl \
-      ld-linux.so.2 \
-      glibc.i686 \
-      libuuid.i686 \
-    && yum clean all \
-    && rm -rf /var/cache/yum
+RUN apk update && apk upgrade
+RUN apk --no-cache add \
+    $java_version \
+    tar \
+    wget \
+    gcc \
+    linux-headers \
+    musl-dev \
+    libcurl \
+    curl-dev \
+    libstdc++ \
+    openssl \
+    ipython \
+    --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community \
+    && \
+    rm -rf /var/cache/apk/*
+ 
+# Needed for the pycurl compilation
+ENV PYCURL_SSL_LIBRARY=openssl
+ENV PYTHONUNBUFFERED 1
+
+RUN python3 -m pip install --no-cache-dir --upgrade \
+    pip \
+    psutil \
+    pycurl \
+    urllib3 
 
 ENV TZ=America/Montreal
 
