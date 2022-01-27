@@ -11,8 +11,8 @@
 1. Clone this repo
 2. Copy the license and AEM `quick start` jar on the root path.
 3. AEM packages can be placed on `./author/packages/` and `./publisher/packages/` and they will be installed at build time.
-4. `AEM 6.4` => Build the Docker images with `docker build -t aem-base --build-arg java_version=java-1.8.0-openjdk -f base/Dockerfile . && docker-compose build --progress=plain`.
-5. `AEM 6.5` => Build the Docker images with `docker build -t aem-base --build-arg java_version=java-11-openjdk -f base/Dockerfile . && docker-compose build --progress=plain`.
+4. `AEM 6.4` => Build the Docker images with `docker build -t aem-base --build-arg java_version=openjdk-8-jdk -f base/Dockerfile . && docker-compose build --progress=plain`.
+5. `AEM 6.5` => Build the Docker images with `docker build -t aem-base --build-arg java_version=openjdk-11-jdk -f base/Dockerfile . && docker-compose build --progress=plain`.
 6. Start the containers with `docker-compose up`. 
 7. A volume will be mounted on `./logs` on your local system to the containers, so you have easy access to the logs of all containers.
 8. Wait until AEM has fully started. To check for the author, open the [bundles page](http://localhost:4502/system/console/bundles) and when all bundle statusses are either `Active` or `Fragment` the AEM environment has fully started.
@@ -39,11 +39,3 @@ Inspiration and code examples are taken from the following projects:
 - [https://github.com/AdobeAtAdobe/aem_6-1_docker](https://github.com/AdobeAtAdobe/aem_6-1_docker)
 - [https://hub.docker.com/r/ggotti/aem-base](https://hub.docker.com/r/ggotti/aem-base)
 - [https://github.com/adfinis-sygroup/aem-docker](https://github.com/adfinis-sygroup/aem-docker)
-
-# java versions
-- openjdk8
-- openjdk11 
-
-# Debian
-openjdk-8-jdk
-openjdk-11-jdk 
