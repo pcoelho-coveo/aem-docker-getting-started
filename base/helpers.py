@@ -39,17 +39,19 @@ def read_file_from_zip(zipfile_path, file_path):
 
 def get_package_name_and_version_from_package_zip(zip_file):
     properties_data = read_file_from_zip(zip_file, 'META-INF/vault/properties.xml')
-    package_name = re.findall('<entry key="name">([^<]+)</entry>', properties_data)[0]
-    package_version = re.findall('<entry key="version">([^<]+)</entry>', properties_data)
-    if (len(package_version) > 0):
-        return "%s-%s" % (package_name, package_version[0])
+    package_name = re.findall(b'<entry key="name">([^<]+)</entry>', properties_data)[0].decode("utf-8")
+    package_version = re.findall(b'<entry key="version">([^<]+)</entry>', properties_data)
+
+    if len(package_version) > 0:
+        return "%s-%s" % (package_name, package_version[0].decode("utf-8"))
     return package_name
 
 
 def package_requires_restart(zip_file):
     properties_data = read_file_from_zip(zip_file, 'META-INF/vault/properties.xml')
-    requires_restart = re.findall('<entry key="requiresRestart">([^<]+)</entry>', properties_data)
-    if (len(requires_restart) > 0 and requires_restart[0].lower() == 'true'):
+    requires_restart = re.findall(b'<entry key="requiresRestart">([^<]+)</entry>', properties_data)
+
+    if len(requires_restart) > 0 and requires_restart[0].decode("utf-8").lower() == 'true':
         return True
     return False
 
