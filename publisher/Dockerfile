@@ -1,4 +1,4 @@
-FROM aem-base
+FROM websites-aem-base
 
 WORKDIR /opt/aem
 

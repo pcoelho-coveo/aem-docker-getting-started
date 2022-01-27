@@ -12,9 +12,9 @@
 2. Copy the `license.properties` and AEM `AEM_6.x_Quickstart.jar` to the root path.
 3. Place AEM packages `./author/packages/` and/or `./publisher/packages/` (they will be installed at build time).
 4. Build images for `AEM 6.4` 
-* `docker build -t aem-base --build-arg java_version=openjdk-8-jre -f base/Dockerfile . && docker-compose build --progress=plain`
+* `docker build -t websites-aem-base --build-arg java_version=openjdk-8-jre -f base/Dockerfile . && docker-compose build --progress=plain`
 5. Build images for `AEM 6.5`
-* `docker build -t aem-base --build-arg java_version=openjdk-11-jre -f base/Dockerfile . && docker-compose build --progress=plain`
+* `docker build -t websites-aem-base --build-arg java_version=openjdk-11-jre -f base/Dockerfile . && docker-compose build --progress=plain`
 6. Start containers `docker-compose up`. 
 7. A volume will be mounted on `./logs` on your local system to the containers, so you have easy access to the logs of all containers.
 8. Wait until AEM has fully started. To check for the author, open the [bundles page](http://localhost:4502/system/console/bundles) and when all bundle statuses are either `Active` or `Fragment` the AEM environment has fully started.
