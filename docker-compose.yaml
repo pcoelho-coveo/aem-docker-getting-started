@@ -1,7 +1,8 @@
 version: '3'
 services:
   author:
-    container_name: aem_author
+    image: websites_aem_author
+    container_name: websites_aem_author
     build:
       context: ./
       dockerfile: author/Dockerfile
@@ -19,7 +20,8 @@ services:
           cpus: '2'
           memory: 4G
   publisher:
-    container_name: aem_publisher
+    image: websites_aem_publisher
+    container_name: websites_aem_publisher
     build:
       context: ./
       dockerfile: publisher/Dockerfile
@@ -35,7 +37,8 @@ services:
           cpus: '1'
           memory: 3G
   dispatcher:
-    container_name: aem_dispatcher
+    image: websites_aem_dispatcher
+    container_name: websites_aem_dispatcher
     build:
       context: ./dispatcher
     hostname: 'dispatcher'

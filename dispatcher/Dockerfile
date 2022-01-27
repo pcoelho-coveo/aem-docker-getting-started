@@ -1,5 +1,4 @@
 FROM httpd:2.4.52-bullseye
-WORKDIR /
 
 RUN apt-get update && \
     apt-get upgrade -y && \
